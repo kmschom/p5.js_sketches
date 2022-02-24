@@ -13,3 +13,6 @@ Image and Reality: https://editor.p5js.org/kmschom/full/-Yt3zJta
   
 Matching Game: https://editor.p5js.org/kmschom/full/NG5hphp2
   Click on each shape to change it's color. Match the color of each shape to it's moving counterpart. Once you believe you have matched all the colors, press the spacebar.
+  
+MasterMind: https://editor.p5js.org/kmschom/full/lepZ20ufJ
+  Simple implementation of the game Mastermind. Click on the shapes to change their colors. Press any key to make a guess.
