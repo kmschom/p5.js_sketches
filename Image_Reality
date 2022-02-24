@@ -1,0 +1,86 @@
+//Kelly Schombert
+//ARTD 252 Winter 2019
+//Matching Game
+//02/09/2020
+//My goal was to make a type of puzzle where you can pull apart the pieces of the house with the arrow keys 
+and click on the surprise you find inside. I drew the house, but editing and splicing the image together posed some difficulties.
+
+let roof;
+let side;
+let front;
+let chest;
+let jewel;
+
+let pos1 = 174;
+let pos2 = 163;
+let spos1 = 477;
+let spos2 = 11;
+let rpos1 = 150;
+let rpos2 = 20;
+
+let show = true;
+
+function preload(){
+ front = loadImage('Front.png');
+ side = loadImage('Side.png');
+ roof = loadImage('Roof.png');
+ chest = loadImage('Chest.png');
+ jewel = loadImage('Background.png');
+}
+
+function setup() {
+  createCanvas(400, 400);
+  colorMode(HSB);
+}
+
+function draw() {
+  let i = frameCount%360;
+  background(i, 50, 100);
+  
+  push();
+    if(show == false){
+      scale(0.25);
+      image(jewel, 700, 620);
+    }
+  pop();
+ 
+  push();
+    if(show == true){
+      blendMode(DARKEST);
+      image(chest, 150, 150);
+    }
+  pop();
+  
+  push();
+    if(show == true){
+      scale(0.5);
+      image(front, pos1, pos2);
+      image(side, spos1, spos2);
+      image(roof, rpos1, rpos2);
+    }
+  pop();
+}
+
+function keyPressed() {
+  if (keyCode === LEFT_ARROW) {
+    for (let i = 0; i < 5; i++){
+      pos1 -= i;
+      pos2 += i;
+    }
+  } else if (keyCode === RIGHT_ARROW) {
+    for (let i = 0; i < 5; i++){
+      spos1 += i;
+      spos2 += i;
+    }
+  } else if(keyCode == UP_ARROW){
+    for (let i = 0; i < 5; i++){
+      rpos2 -= i;
+    }
+  }
+}
+
+function mouseClicked(){
+  if(mouseX < 270 && mouseX > 150 && mouseY < 230 && mouseY > 150){
+    show = false;
+  }
+}
