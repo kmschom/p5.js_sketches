@@ -1,0 +1,289 @@
+//Kelly Schombert
+//ARTD 252 Winter 2019
+//Matching Game
+//02/01/2020
+//There are 4 pairs of shapes - circles, triangles, squares, and ovals. Your goal is to make the pairs of shapes be the same color. You do that by clicking on the shapes outlined in the thick black color and hitting any key to check your answer. If your answer is correct, the shapes will stop moving/disappear and you will have won.
+
+cirright = false;
+triright = false;
+sqright = false;
+ovalright = false;
+win = false;
+
+function setup() {
+  createCanvas(400, 400);
+  colorMode(HSB);
+  frameRate(24);
+  
+  col1 = color(43, 60, 100);
+  col2 = color(200, 60, 100);
+  col3 = color(339, 60, 100);
+  col4 = color(102, 60, 100);
+  colList = [col1, col2, col3, col4];
+  
+  circol = col1;
+  tricol = col1;
+  sqcol = col1;
+  ovalcol = col1;
+  
+  //choosing colors for the goal pattern
+  cirset = random(colList);
+  triset = random(colList);
+  sqset = random(colList);
+  ovalset = random(colList);
+}
+
+function draw() {
+  background(frameCount % 360, 50, 80);
+  
+  let color1 = getNoise(0.01, 360);
+  let color2 = getNoise(0.03, 100);
+  let color3 = getNoise(0.05, 205);
+  let color4 = getNoise(0.007, 50);
+  
+  let x1 = getNoise(0.0234, width);
+  let x2 = getNoise(0.012, width);
+  let x3 = getNoise(0.0324, width);
+  let x4 = getNoise(0.053, width);
+  let x5 = getNoise(0.073, width/2);
+  let x6 = getNoise(0.023, width/5);
+  
+  let size1 = getNoise(0.1, 100);
+  
+  let y1 = getNoise(0.0432, height);
+  let y2 = getNoise(0.0532, height);
+  let y3 = getNoise(0.04122, height);
+  let y4 = getNoise(0.064523, height);
+  let y5 = getNoise(0.017, height - height/2);
+  let y6 = getNoise(0.092, height/6);
+
+//random triangle
+push();
+  fill(color4, 60, 100);
+  noStroke();
+  if(win === false){
+    triangle(x6, y1, x6 - 10, 30, x3 + 20, y6);  
+  }
+pop();
+  
+//random rect
+push();
+  fill(color2, 60, 100);
+  noStroke();
+  if(win === false){
+    rect(x5, y5, x2, 50);
+  }
+pop();
+
+//random circle
+push();
+  fill(color3, 60, 100);
+  noStroke();
+  if(win === false){
+    circle(x1, 330, size1);
+  }
+pop();
+
+//random rect
+push();
+  fill(color1, 60, 100);
+  noStroke();
+  if(win === false){
+    rect(x3, 250, x4 - 50, 50);
+  }
+pop();
+
+  
+//Goal Pieces  
+//Circle goal
+push();
+  fill(cirset);
+  strokeWeight(1);
+  if(win === false){
+    circle(y1, x3, 45);
+  }else{
+    circle(width/4, height/3, 45);
+  }
+pop();
+  
+//Triangle goal
+push();
+  fill(triset);
+  strokeWeight(0.5);
+  if(win === false){
+    translate(x2 + 20, y2);
+    scale(2);
+    triangle(12, 0, 0, 20, 24, 20);
+  }else{
+    translate(width/4 + 40, height/3 - 20);
+    scale(2);
+    triangle(12, 0, 0, 20, 24, 20);
+  }
+pop();
+  
+//Square goal
+push();
+  fill(sqset);
+  strokeWeight(.5);
+  if(win === false){
+    translate(y3, y3);
+    scale(2);
+    rectMode(CENTER);
+    square(0, 0, 20);
+  }else{
+    translate(width/4 + 132, height/3);
+    scale(2);
+    rectMode(CENTER);
+    square(0, 0, 20);
+  }
+pop();
+  
+//Oval goal
+push();
+  fill(ovalset);
+  if(win === false){
+    translate(width/4 + 193, (y4) - 60);
+    ellipse(0, 0, 35, 43);
+  }else{
+    translate(width/4 + 193, height/3);
+    ellipse(0, 0, 35, 43);
+  }
+pop();
+
+
+//Playing pieces
+//Circle piece
+push();
+  fill(circol);
+  strokeWeight(2);
+  circle(width/4, height/2, 45);
+pop();
+  
+//Triangle piece
+push();
+  fill(tricol);
+  strokeWeight(1);
+  translate(width/4 + 40, height/2 - 20);
+  scale(2);
+  triangle(12, 0, 0, 20, 24, 20);
+pop();
+  
+//Square piece
+push();
+  fill(sqcol);
+  strokeWeight(1);
+  translate(width/4 + 132, height/2);
+  scale(2);
+  rectMode(CENTER);
+  square(0, 0, 20);
+pop();
+  
+//Oval piece
+push();
+  fill(ovalcol);
+  strokeWeight(2);
+  translate(width/4 + 193, height/2);
+  ellipse(0, 0, 35, 43);
+pop();
+
+  
+//Notify Winner
+push();
+if(win === true){
+    textSize(20);
+    textAlign(CENTER);
+    textFont('Georgia');
+    text("Winner!", 200, 80)
+  }
+pop();
+
+}
+
+function getNoise(inc, size){
+  let xoff = frameCount * inc;
+  let n = noise(xoff) * size;
+  return n;
+}
+
+//Click ability
+function mouseClicked() {
+  
+  if(mouseX > 70 && mouseX < 125 && mouseY > 170 && mouseY < 220 && cirright === false){
+
+  if (circol === col1) {
+    circol = col2;
+    } else if (circol === col2) {
+    circol = col3;
+    } else if (circol === col3){
+    circol = col4;
+    } else if (circol === col4){
+    circol = col1;
+    }
+  }
+  
+  if(mouseX > 140 && mouseX < 190 && mouseY > 180 && mouseY < 220 && triright === false){
+    
+    if (tricol === col1) {
+    tricol = col2;
+    } else if (tricol === col2) {
+    tricol = col3;
+    } else if (tricol === col3){
+    tricol = col4;
+    } else if (tricol === col4){
+    tricol = col1;
+    }
+  }
+  
+  if(mouseX > 210 && mouseX < 250 && mouseY > 180 && mouseY < 220 && sqright === false){
+    
+  if (sqcol === col1) {
+    sqcol = col2;
+    } else if (sqcol === col2) {
+    sqcol = col3;
+    } else if (sqcol === col3){
+    sqcol = col4;
+    } else if (sqcol === col4){
+    sqcol = col1;
+    }
+  }  
+  
+  if(mouseX > 270 && mouseX < 310 && mouseY > 180 && mouseY < 220 && ovalright === false){
+    
+    if (ovalcol === col1) {
+    ovalcol = col2;
+    } else if (ovalcol === col2) {
+    ovalcol = col3;
+    } else if (ovalcol === col3){
+    ovalcol = col4;
+    } else if (ovalcol === col4){
+    ovalcol = col1;
+    }
+  }
+}
+
+//Matching game
+function keyPressed() {
+  if(cirset === circol){
+    cirright = true;
+  }else {
+    cirright = false;
+  }
+  if(triset === tricol){
+    triright = true;
+  }else {
+    triright = false;
+  }
+  if(sqset === sqcol){
+    sqright = true;
+  }else {
+    sqright = false;
+  }
+  if(ovalset === ovalcol){
+    ovalright = true;
+  }else {
+    ovalright = false;
+  }
+  if(cirright === true && triright === true && sqright === true && ovalright === true){
+    win = true;
+  }
+}
