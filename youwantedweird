@@ -1,0 +1,139 @@
+//Kelly Schombert
+//ART 252
+//Winter 2020
+//02/16/20
+
+let img;
+let cola;
+let colatex;
+let rocket;
+let rockettex;
+let house;
+let housetex;
+let person;
+let persontex;
+let pinapple;
+let chicken;
+let chickentex;
+let lemon;
+let lemontex;
+let words;
+
+function preload() {
+  cola = loadModel('coke can 2.obj');
+  rocket = loadModel('Saturn V.obj');
+  house = loadModel('House.obj');
+  person = loadModel('person.obj');
+  chicken = loadModel('Chicken.obj');
+  lemon = loadModel('lemon.obj');
+  words = loadModel('5D.obj')
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight, WEBGL);
+  img = loadImage("Starmap.jpg");
+  colatex = loadImage('colatex.jpg');
+  rockettex = loadImage('Newshiptex.jpg');
+  housetex = loadImage('bricktex.jpg');
+  persontex = loadImage('persontex.jpg');
+  chickentex = loadImage('Chickentex.jpg');
+  lemontex = loadImage('lemontex.jpg');
+  // Change the perspective. This is added to change the near and far clipping planes. If you are having problems with objects mysteriously disappearing, you may need to adjust these numbers.
+  perspective(PI / 2.0, width / height, 0.01, 50000);
+}
+
+function draw() {
+  orbitControl(); // enable free rotation / motion
+  background(0);
+  noStroke();
+  // Draw background
+  push();
+  texture(img);
+  scale(100);
+  
+  box(); 
+  pop();
+  
+  //words
+  push();
+    scale(0.02);
+    rotateX(PI/2);
+    //rotateZ(getSine(1, 1));
+    model(words);
+  pop();
+  
+  textureWrap(CLAMP);
+  rotateX(frameCount * .005);
+  rotateY(frameCount * .005);
+  rotateZ(frameCount * .005);
+   
+  let sine1 = getSine(2, 1);
+  let sine2 = getSine(0.5, 24);
+  let sine3 = getSine(1.5, 12);
+  
+  //cola
+  push();
+    drawModel(0, 0, -2000, sine1, 0.8, cola, colatex);
+    drawModel(3000, -1000, -1500, sine2, 0.8, cola, colatex);
+  pop();
+  
+  //rocket
+  push();
+    drawModel(-200, 0, 0, sine3, 55, rocket, rockettex);
+    drawModel(700, 61, 200, sine1, 55, rocket, rockettex);
+    drawModel(-1000, -32, 200, sine2, 55, rocket, rockettex);
+  pop();
+  
+  //house
+  push();
+    drawModel(-700, -500, 200, sine1, 0.7, house, housetex);
+    drawModel(2000, 0, 200, sine2, 0.7, house, housetex);
+    drawModel(-8000, -600, 200, sine1, 0.7, house, housetex);
+  pop();
+  
+  //person
+  push();
+    drawModel(1000, 550, 0, sine1, 0.1, person, persontex);
+    drawModel(-100, 100, 0, sine1, 0.05, person, persontex);
+    drawModel(-500, 10, 0, sine2, 0.3, person, persontex);
+  pop();
+  
+  //chicken
+  push();
+    drawModel(20, 300, -100, sine1, 0.5, chicken, chickentex);
+    drawModel(-2000, -400, -200, sine2, 2, chicken, chickentex);
+    drawModel(1000, 100, -100, sine2, 0.8, chicken, chickentex);
+    drawModel(-3000, -550, -150, sine1, 0.5, chicken, chickentex);
+  pop();
+  
+  //lemon
+  push();
+    drawModel(1000, -550, -10, sine1, 23, lemon, lemontex);
+    drawModel(-100, -400, -100, sine3, 30, lemon, lemontex);
+    drawModel(-2000, 300, 200, sine1, 10, lemon, lemontex);
+  pop();
+  
+}
+
+function drawModel(x, y, z, r, s, name, tex){
+  push();
+    
+    translate(x, y, z);
+    rotateX(PI/2);
+    rotateZ(r + PI);
+    scale(s);
+    
+    noStroke();
+    texture(tex);
+    model(name);  
+  
+  pop();
+}
+
+function getSine(freq, amp){
+  let i = frameCount * freq;
+  i = radians(i);
+  let n = sin(i) * amp;
+  
+  return n;
+}
