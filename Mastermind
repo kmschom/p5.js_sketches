@@ -1,0 +1,223 @@
+//Kelly Schombert
+//ARTD 252 Winter 2019
+//Mastermind
+//01/26/2020
+//Here is a very easy version of the game Mastermind. Hint: Try clicking on the shapes and pressing any key.
+
+//variables needed for click function and key press function
+let circol = 0;
+let tricol = 0;
+let sqcol = 0;
+let ovalcol = 0;
+colList = [0, 124, 190, 255];
+cirright = false;
+triright = false;
+sqright = false;
+ovalright = false;
+win = false;
+
+function setup() {
+  createCanvas(550, 450);
+  //choosing colors for the goal pattern
+  cirset = random(colList);
+  triset = random(colList);
+  sqset = random(colList);
+  ovalset = random(colList);
+}
+
+function draw() {
+  background(239);
+
+//Goal pieces
+  //Circle piece
+  push();
+    fill(cirset);
+    strokeWeight(1);
+    circle(width/3, height/4, 45);
+  pop();
+  
+  //Triangle piece
+  push();
+    fill(triset);
+    strokeWeight(0.5);
+    translate(width/3 + 40, height/4 - 20);
+    scale(2);
+    triangle(12, 0, 0, 20, 24, 20);
+  pop();
+  
+  //Square piece
+  push();
+    fill(sqset);
+    strokeWeight(0.5);
+    translate(width/3 + 132, height/4);
+    scale(2);
+    rectMode(CENTER);
+    square(0, 0, 20);
+  pop();
+  
+  //Oval piece
+  push();
+    fill(ovalset);
+    strokeWeight(1);
+    translate(width/3 + 193, height/4);
+    ellipse(0, 0, 35, 43);
+  pop();
+  
+//The Cover-Up
+  push();
+    if(win === false){
+      fill(255);
+    } else{
+      noFill();
+    }
+    rectMode(CENTER);
+    rect((width/2) + 5, height/4, 293, 70);
+  pop();
+  
+//For The Win
+  push();
+    if(win === true){
+      textSize(20);
+      textFont('Georgia');
+      text("Congratulations Code-Breaker! You Win!", 100, 50)
+    }
+  pop();
+  
+//Playing pieces
+  //Circle piece
+  push();
+    fill(circol);
+    strokeWeight(1);
+    circle(width/3, height/2, 45);
+  pop();
+  
+  //Triangle piece
+  push();
+    fill(tricol);
+    strokeWeight(0.5);
+    translate(width/3 + 40, height/2 - 20);
+    scale(2);
+    triangle(12, 0, 0, 20, 24, 20);
+  pop();
+  
+  //Square piece
+  push();
+    fill(sqcol);
+    strokeWeight(0.5);
+    translate(width/3 + 132, height/2);
+    scale(2);
+    rectMode(CENTER);
+    square(0, 0, 20);
+  pop();
+  
+  //Oval piece
+  push();
+    fill(ovalcol);
+    strokeWeight(1);
+    translate(width/3 + 193, height/2);
+    ellipse(0, 0, 35, 43);
+  pop();
+
+  if(cirright === true){
+    textSize(30);
+    text('*', 178, 300);
+    fill(0);
+  }
+  if(triright === true){
+    textSize(30);
+    text('*', 241, 300);
+    fill(0);
+  }
+  if(sqright === true){
+    textSize(30);
+    text('*', 309, 300);
+    fill(0);
+  }
+  if(ovalright === true){
+    textSize(30);
+    text('*', 371, 300);
+    fill(0);
+  }
+}
+
+//Click ability
+function mouseClicked() {
+  
+  if(mouseX > 160 && mouseX < 210 && mouseY > 200 && mouseY < 250){
+  
+  if (circol === 0) {
+    circol = 255;
+    } else if (circol === 255) {
+    circol = 124;
+    } else if (circol === 124){
+    circol = 190;
+    } else if (circol === 190){
+    circol = 0;
+    }
+  }
+  
+  if(mouseX > 225 && mouseX < 275 && mouseY > 200 && mouseY < 250){
+    if (tricol === 0) {
+    tricol = 255;
+    } else if (tricol === 255) {
+    tricol = 124;
+    } else if (tricol === 124){
+    tricol = 190;
+    } else if (tricol === 190){
+    tricol = 0;
+    }
+  }
+  
+  if(mouseX > 290 && mouseX < 340 && mouseY > 200 && mouseY < 250){
+    
+  if (sqcol === 0) {
+    sqcol = 255;
+    } else if (sqcol === 255) {
+    sqcol = 124;
+    } else if (sqcol === 124){
+    sqcol = 190;
+    } else if (sqcol === 190){
+    sqcol = 0;
+    }
+  }  
+  
+  if(mouseX > 355 && mouseX < 400 && mouseY > 200 && mouseY < 250){
+    
+    if (ovalcol === 0) {
+    ovalcol = 255;
+    } else if (ovalcol === 255) {
+    ovalcol = 124;
+    } else if (ovalcol === 124){
+    ovalcol = 190;
+    } else if (ovalcol === 190){
+    ovalcol = 0;
+    }
+  }
+}
+
+//Matching game
+function keyPressed() {
+  if(cirset === circol){
+    cirright = true;
+  }else {
+    cirright = false;
+  }
+  if(triset === tricol){
+    triright = true;
+  }else {
+    triright = false;
+  }
+  if(sqset === sqcol){
+    sqright = true;
+  }else {
+    sqright = false;
+  }
+  if(ovalset === ovalcol){
+    ovalright = true;
+  }else {
+    ovalright = false;
+  }
+  if(cirright === true && triright === true && sqright === true && ovalright === true){
+    win = true;
+  }
+}
