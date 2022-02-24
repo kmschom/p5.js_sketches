@@ -10,3 +10,6 @@ Badger Burrow: https://editor.p5js.org/kmschom/full/ojL3JZ7E
 
 Image and Reality: https://editor.p5js.org/kmschom/full/-Yt3zJta
   Use the arrow keys to pull apart the walls and roof to the house. Click on what you find in the middle. 
+  
+Matching Game: https://editor.p5js.org/kmschom/full/NG5hphp2
+  Click on each shape to change it's color. Match the color of each shape to it's moving counterpart. Once you believe you have matched all the colors, press the spacebar.
